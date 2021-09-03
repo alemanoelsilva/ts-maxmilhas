@@ -1,2 +1,8 @@
 node_modules
 .idea
+dist
+coverage
+globalConfig.json
+./globalConfig.json
+*globalConfig*
+
