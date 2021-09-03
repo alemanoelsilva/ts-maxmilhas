@@ -19,4 +19,21 @@ describe('Controller - Add Blacklist', () => {
       })
     })
   })
+
+  describe('Failure blacklist creation', () => {
+    it('should return status code 400 when document number is not provided', () => {
+      const addBlacklist = new AddBlacklist()
+
+      const request = {
+        body: {}
+      }
+
+      const response = addBlacklist.handler(request)
+
+      expect(response).toEqual({
+        message: 'Document was not provided',
+        statusCode: 400
+      })
+    })
+  })
 })
