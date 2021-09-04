@@ -1,16 +1,30 @@
 import { AddBlacklist } from './add-blacklist'
 import { IHttpRequest } from '../protocols/http'
 import { MissingParamError } from '../errors/missing-params-error'
+import { IValidationAdapter } from '../protocols/validation-adapter'
 
 interface ITypes {
   sut: AddBlacklist
+  documentNumberValidationStub: IValidationAdapter
+}
+
+const makeDocumentNumberValidationStub = (): IValidationAdapter => {
+  class DocumentNumberValidationStub implements IValidationAdapter {
+    validate(): boolean {
+      return true
+    }
+  }
+  return new DocumentNumberValidationStub()
 }
 
 const makeSut = (): ITypes => {
-  const sut = new AddBlacklist()
+  const documentNumberValidationStub = makeDocumentNumberValidationStub()
+
+  const sut = new AddBlacklist(documentNumberValidationStub)
 
   return {
-    sut
+    sut,
+    documentNumberValidationStub
   }
 }
 
