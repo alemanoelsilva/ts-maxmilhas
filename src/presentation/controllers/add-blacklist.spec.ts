@@ -66,5 +66,15 @@ describe('Controller - Add Blacklist', () => {
       expect(response.body).toEqual(new MissingParamError('documentNumber'))
       expect(response.statusCode).toEqual(400)
     })
+
+    it('should return status code 401 when document number is not valid', async() => {
+      const { sut, documentNumberValidationStub } = makeSut()
+      jest.spyOn(documentNumberValidationStub, 'validate').mockReturnValueOnce(false)
+
+      const response = await sut.handler(makeFakeRequest().succeed)
+
+      expect(response.body.message).toEqual('Document provided is not valid')
+      expect(response.statusCode).toEqual(401)
+    })
   })
 })
