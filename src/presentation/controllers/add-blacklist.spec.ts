@@ -2,6 +2,7 @@ import { AddBlacklist } from './add-blacklist'
 import { IHttpRequest } from '../protocols/http'
 import { MissingParamError } from '../errors/missing-params-error'
 import { IDocumentNumberValidation } from '../protocols/validation'
+import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
 
 interface ITypes {
   sut: AddBlacklist
@@ -73,7 +74,7 @@ describe('Controller - Add Blacklist', () => {
 
       const response = await sut.handler(makeFakeRequest().succeed)
 
-      expect(response.body.message).toEqual('Document provided is not valid')
+      expect(response.body).toEqual(new InvalidDocumentNumberError())
       expect(response.statusCode).toEqual(401)
     })
   })
