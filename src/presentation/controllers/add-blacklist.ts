@@ -1,21 +1,24 @@
 import { HttpRequest, HttpResponse } from '../protocols/http'
+import { Controller } from '../protocols/controller'
 
-export class AddBlacklist {
-  handler(request: HttpRequest): HttpResponse {
-    if (request.body.documentNumber) {
-      return {
+export class AddBlacklist implements Controller {
+  async handler(request: HttpRequest): Promise<HttpResponse> {
+    const { documentNumber } = request.body
+
+    if (!documentNumber) {
+      return new Promise(resolve => resolve({
         body: {
-          message: 'Document was created with success'
+          message: 'Document was not provided'
         },
-        statusCode: 201
-      }
+        statusCode: 400
+      }))
     }
 
-    return {
+    return new Promise(resolve => resolve({
       body: {
-        message: 'Document was not provided'
+        message: 'Document was created with success'
       },
-      statusCode: 400
-    }
+      statusCode: 201
+    }))
   }
 }
