@@ -1,8 +1,8 @@
-import { HttpRequest, HttpResponse } from '../protocols/http'
-import { Controller } from '../protocols/controller'
+import { IHttpRequest, IHttpResponse } from '../protocols/http'
+import { IController } from '../protocols/controller'
 
-export class AddBlacklist implements Controller {
-  async handler(request: HttpRequest): Promise<HttpResponse> {
+export class AddBlacklist implements IController {
+  async handler(request: IHttpRequest): Promise<IHttpResponse> {
     const { documentNumber } = request.body
 
     if (!documentNumber) {
