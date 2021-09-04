@@ -2,10 +2,10 @@ import { IHttpRequest, IHttpResponse } from '../protocols/http'
 import { IController } from '../protocols/controller'
 import { badRequest, succeed } from '../helpers/http/http-helpers'
 import { MissingParamError } from '../errors/missing-params-error'
-import { IValidationAdapter } from '../protocols/validation-adapter'
+import { IDocumentNumberValidation } from '../protocols/validation'
 
 export class AddBlacklist implements IController {
-  constructor(private readonly documentNumberValidation: IValidationAdapter) {}
+  constructor(private readonly documentNumberValidation: IDocumentNumberValidation) {}
 
   async handler(request: IHttpRequest): Promise<IHttpResponse> {
     const { documentNumber } = request.body

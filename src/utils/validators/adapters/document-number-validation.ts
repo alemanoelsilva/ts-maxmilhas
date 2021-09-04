@@ -1,7 +1,7 @@
 import { isCpf } from 'node-simple-validator'
-import { IValidationAdapter } from '../../../presentation/protocols/validation-adapter'
+import { IDocumentNumberValidation } from '../../../presentation/protocols/validation'
 
-export class DocumentNumberValidation implements IValidationAdapter {
+export class DocumentNumberValidation implements IDocumentNumberValidation {
   validate(documentNumber: string): boolean {
     const isValid = isCpf(documentNumber)
     return isValid

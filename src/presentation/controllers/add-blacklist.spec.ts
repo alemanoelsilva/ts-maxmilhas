@@ -1,15 +1,15 @@
 import { AddBlacklist } from './add-blacklist'
 import { IHttpRequest } from '../protocols/http'
 import { MissingParamError } from '../errors/missing-params-error'
-import { IValidationAdapter } from '../protocols/validation-adapter'
+import { IDocumentNumberValidation } from '../protocols/validation'
 
 interface ITypes {
   sut: AddBlacklist
-  documentNumberValidationStub: IValidationAdapter
+  documentNumberValidationStub: IDocumentNumberValidation
 }
 
-const makeDocumentNumberValidationStub = (): IValidationAdapter => {
-  class DocumentNumberValidationStub implements IValidationAdapter {
+const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
+  class DocumentNumberValidationStub implements IDocumentNumberValidation {
     validate(): boolean {
       return true
     }

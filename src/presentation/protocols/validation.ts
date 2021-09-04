@@ -1,3 +1,3 @@
-export interface IValidationAdapter {
+export interface IDocumentNumberValidation {
   validate: (documentNumber: string) => boolean
 }
