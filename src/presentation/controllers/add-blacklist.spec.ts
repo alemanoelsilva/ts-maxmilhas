@@ -1,9 +1,9 @@
 import { AddBlacklist } from './add-blacklist'
-import { HttpRequest, HttpResponse } from '../protocols/http'
+import { HttpRequest } from '../protocols/http'
 
 describe('Controller - Add Blacklist', () => {
   describe('Successful blacklist creation', () => {
-    it('should return status code 201 when AddBlacklist succeeds', () => {
+    it('should return status code 201 when AddBlacklist succeeds', async() => {
       const addBlacklist = new AddBlacklist()
 
       const request: HttpRequest = {
@@ -12,7 +12,7 @@ describe('Controller - Add Blacklist', () => {
         }
       }
 
-      const response: HttpResponse = addBlacklist.handler(request)
+      const response = await addBlacklist.handler(request)
 
       expect(response).toEqual({
         body: {
@@ -24,14 +24,14 @@ describe('Controller - Add Blacklist', () => {
   })
 
   describe('Failure blacklist creation', () => {
-    it('should return status code 400 when document number is not provided', () => {
+    it('should return status code 400 when document number is not provided', async() => {
       const addBlacklist = new AddBlacklist()
 
       const request: HttpRequest = {
         body: {}
       }
 
-      const response: HttpResponse = addBlacklist.handler(request)
+      const response = await addBlacklist.handler(request)
 
       expect(response).toEqual({
         body: {
