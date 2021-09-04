@@ -1,10 +1,22 @@
 import { AddBlacklist } from './add-blacklist'
 import { IHttpRequest } from '../protocols/http'
 
+interface ITypes {
+  sut: AddBlacklist
+}
+
+const makeSut = (): ITypes => {
+  const sut = new AddBlacklist()
+
+  return {
+    sut
+  }
+}
+
 describe('Controller - Add Blacklist', () => {
   describe('Successful blacklist creation', () => {
     it('should return status code 201 when AddBlacklist succeeds', async() => {
-      const addBlacklist = new AddBlacklist()
+      const { sut } = makeSut()
 
       const request: IHttpRequest = {
         body: {
@@ -12,7 +24,7 @@ describe('Controller - Add Blacklist', () => {
         }
       }
 
-      const response = await addBlacklist.handler(request)
+      const response = await sut.handler(request)
 
       expect(response).toEqual({
         body: {
@@ -25,13 +37,13 @@ describe('Controller - Add Blacklist', () => {
 
   describe('Failure blacklist creation', () => {
     it('should return status code 400 when document number is not provided', async() => {
-      const addBlacklist = new AddBlacklist()
+      const { sut } = makeSut()
 
       const request: IHttpRequest = {
         body: {}
       }
 
-      const response = await addBlacklist.handler(request)
+      const response = await sut.handler(request)
 
       expect(response).toEqual({
         body: {
