@@ -39,7 +39,8 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^3.6.7"
+    "mongodb": "^3.6.7",
+    "node-simple-validator": "^2.0.0"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.2.4",
