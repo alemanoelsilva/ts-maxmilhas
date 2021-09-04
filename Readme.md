@@ -26,9 +26,9 @@ Must be used the follows technologies:
 
 #### The structure will be split into layers:
 
-- **Presentation:** it accepts and return data
+- **Presentation:** it depends on Domain only, the layer accepts and return data
 - **Domain:** it contains enterprise types and logic, there is no dependencies
 - **Application:** it depends on only Domain layer, here is all application logic
-- **Infrastructure:** it handles with all external services. This layer depends on only the Application layer
+- **Infrastructure:** it handles with all external services. This layer depends on Application only
 - **Persistence or Data:** it handles with data, database, migrations
 
