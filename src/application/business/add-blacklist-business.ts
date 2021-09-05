@@ -1,12 +1,12 @@
-import { IAddBlacklist } from '../../domain/usecases/blacklist/add-blacklist'
-import { IGetNextBlacklistVersion } from '../../domain/usecases/blacklist/get-next-blacklist-version'
-import { IAddBlacklistBusiness } from '../protocols/add-blacklist'
 import { IBlacklistModel } from '../../domain/models/blacklist'
+import { IAddBlacklist } from '../../domain/usecases/blacklist/add-blacklist'
+import { IAddBlacklistRepository } from '../protocols/add-blacklist-repository'
+import { IGetNextBlacklistVersionRepository } from '../protocols/get-next-blacklist-version-repository'
 
-export class AddBlacklistBusiness implements IAddBlacklistBusiness {
+export class AddBlacklistBusiness implements IAddBlacklist {
   constructor(
-    private readonly addBlacklist: IAddBlacklist,
-    private readonly getBlacklist: IGetNextBlacklistVersion
+    private readonly addBlacklist: IAddBlacklistRepository,
+    private readonly getBlacklist: IGetNextBlacklistVersionRepository
   ) {}
 
   async add(documentNumber: string): Promise<void> {

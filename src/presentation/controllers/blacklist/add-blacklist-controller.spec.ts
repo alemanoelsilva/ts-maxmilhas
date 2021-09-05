@@ -4,12 +4,12 @@ import { MissingParamError } from '../../errors/missing-params-error'
 import { IDocumentNumberValidation } from '../../protocols/validation'
 import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
 import { IntervalServerError } from '../../errors/interval-server-error'
-import { IAddBlacklistBusiness } from '../../../application/protocols/add-blacklist'
+import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
 
 interface ITypes {
   sut: AddBlacklistController
   documentNumberValidationStub: IDocumentNumberValidation
-  addBlacklistStub: IAddBlacklistBusiness
+  addBlacklistStub: IAddBlacklist
 }
 
 const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
@@ -21,8 +21,8 @@ const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
   return new DocumentNumberValidationStub()
 }
 
-const makeAddBlacklist = (): IAddBlacklistBusiness => {
-  class AddBlackListStub implements IAddBlacklistBusiness {
+const makeAddBlacklist = (): IAddBlacklist => {
+  class AddBlackListStub implements IAddBlacklist {
     async add(document: string): Promise<void> {}
   }
   return new AddBlackListStub()

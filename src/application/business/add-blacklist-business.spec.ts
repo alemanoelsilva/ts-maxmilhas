@@ -1,15 +1,15 @@
 import { AddBlacklistBusiness } from './add-blacklist-business'
-import { IAddBlacklist } from '../../domain/usecases/blacklist/add-blacklist'
-import { IGetNextBlacklistVersion } from '../../domain/usecases/blacklist/get-next-blacklist-version'
+import { IGetNextBlacklistVersionRepository } from '../protocols/get-next-blacklist-version-repository'
+import { IAddBlacklistRepository } from '../protocols/add-blacklist-repository'
 
 interface ITypes {
   sut: AddBlacklistBusiness
-  addBlacklistStub: IAddBlacklist
-  getNextVersionStub: IGetNextBlacklistVersion
+  addBlacklistRepositoryStub: IAddBlacklistRepository
+  getNextBlacklistVersionRepositoryStub: IGetNextBlacklistVersionRepository
 }
 
-const makeGetNextVersion = (): IGetNextBlacklistVersion => {
-  class GetNextBlacklistVersionStub implements IGetNextBlacklistVersion {
+const makeGetNextVersion = (): IGetNextBlacklistVersionRepository => {
+  class GetNextBlacklistVersionStub implements IGetNextBlacklistVersionRepository {
     async getNextVersion(): Promise<string> {
       return new Promise(resolve => resolve('1'))
     }
@@ -17,8 +17,8 @@ const makeGetNextVersion = (): IGetNextBlacklistVersion => {
   return new GetNextBlacklistVersionStub()
 }
 
-const makeAddBlacklist = (): IAddBlacklist => {
-  class AddBlackListStub implements IAddBlacklist {
+const makeAddBlacklist = (): IAddBlacklistRepository => {
+  class AddBlackListStub implements IAddBlacklistRepository {
     async add(): Promise<any> {
       return new Promise(resolve => resolve(true))
     }
@@ -27,25 +27,25 @@ const makeAddBlacklist = (): IAddBlacklist => {
 }
 
 const makeSut = (): ITypes => {
-  const addBlacklistStub = makeAddBlacklist()
-  const getNextVersionStub = makeGetNextVersion()
+  const addBlacklistRepositoryStub = makeAddBlacklist()
+  const getNextBlacklistVersionRepositoryStub = makeGetNextVersion()
 
-  const sut = new AddBlacklistBusiness(addBlacklistStub, getNextVersionStub)
+  const sut = new AddBlacklistBusiness(addBlacklistRepositoryStub, getNextBlacklistVersionRepositoryStub)
 
   return {
     sut,
-    addBlacklistStub,
-    getNextVersionStub
+    addBlacklistRepositoryStub,
+    getNextBlacklistVersionRepositoryStub
   }
 }
 
 describe('Application - Blacklist Business', () => {
   describe('Add Blacklist Business', () => {
     it('should call internal methods to add blacklist', async () => {
-      const { sut, addBlacklistStub, getNextVersionStub } = makeSut()
+      const { sut, addBlacklistRepositoryStub, getNextBlacklistVersionRepositoryStub } = makeSut()
 
-      const getNextVersionSpy = jest.spyOn(getNextVersionStub, 'getNextVersion')
-      const addSpy = jest.spyOn(addBlacklistStub, 'add')
+      const getNextVersionSpy = jest.spyOn(getNextBlacklistVersionRepositoryStub, 'getNextVersion')
+      const addSpy = jest.spyOn(addBlacklistRepositoryStub, 'add')
 
       const documentNumber: string = '999.999.999-99'
 
@@ -59,12 +59,11 @@ describe('Application - Blacklist Business', () => {
     })
 
     it('should throw when getNextVersion method throws', async () => {
-      const { sut, addBlacklistStub, getNextVersionStub } = makeSut()
+      const { sut, getNextBlacklistVersionRepositoryStub } = makeSut()
 
       const error = new Error('Fake getNextVersion error')
 
-      jest.spyOn(getNextVersionStub, 'getNextVersion').mockRejectedValue(error)
-      jest.spyOn(addBlacklistStub, 'add')
+      jest.spyOn(getNextBlacklistVersionRepositoryStub, 'getNextVersion').mockRejectedValue(error)
 
       const documentNumber: string = '999.999.999-99'
 
@@ -74,12 +73,11 @@ describe('Application - Blacklist Business', () => {
     })
 
     it('should throw when add method throws', async () => {
-      const { sut, addBlacklistStub, getNextVersionStub } = makeSut()
+      const { sut, addBlacklistRepositoryStub } = makeSut()
 
       const error = new Error('Fake addBlacklistStub error')
 
-      jest.spyOn(getNextVersionStub, 'getNextVersion')
-      jest.spyOn(addBlacklistStub, 'add').mockRejectedValue(error)
+      jest.spyOn(addBlacklistRepositoryStub, 'add').mockRejectedValue(error)
 
       const documentNumber: string = '999.999.999-99'
 
