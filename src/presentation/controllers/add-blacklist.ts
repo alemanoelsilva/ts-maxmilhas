@@ -1,6 +1,6 @@
 import { IHttpRequest, IHttpResponse } from '../protocols/http'
 import { IController } from '../protocols/controller'
-import { badRequest, internalServerError, succeed, unauthorizedRequest } from '../helpers/http/http-helpers'
+import { badRequest, created, internalServerError, unauthorizedRequest } from '../helpers/http/http-helpers'
 import { MissingParamError } from '../errors/missing-params-error'
 import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
 import { IDocumentNumberValidation } from '../protocols/validation'
@@ -18,23 +18,16 @@ export class AddBlacklist implements IController {
       const { documentNumber } = request.body
 
       if (!documentNumber) {
-        const missingParamError = new MissingParamError('documentNumber')
-        return badRequest(missingParamError)
+        return badRequest(new MissingParamError('documentNumber'))
       }
 
       if (!this.documentNumberValidation.validate(documentNumber)) {
-        const invalidDocumentNumberError = new InvalidDocumentNumberError()
-        return unauthorizedRequest(invalidDocumentNumberError)
+        return unauthorizedRequest(new InvalidDocumentNumberError())
       }
 
       await this.addBlacklist.add(documentNumber)
 
-      return succeed({
-        body: {
-          message: 'Document was created with success'
-        },
-        statusCode: 201
-      })
+      return created({ message: 'Document was created with success' })
     } catch (error) {
       return internalServerError(new IntervalServerError(error))
     }

@@ -1,7 +1,12 @@
 import { IHttpResponse } from '../../protocols/http'
 
-export const succeed = ({ statusCode = 200, body = {} }): IHttpResponse => ({
-  statusCode,
+export const succeed = (body = {}): IHttpResponse => ({
+  statusCode: 200,
+  body
+})
+
+export const created = (body = {}): IHttpResponse => ({
+  statusCode: 201,
   body
 })
 
