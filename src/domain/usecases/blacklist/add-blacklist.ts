@@ -1,4 +1,4 @@
-import { IBlacklistModel } from '../models/blacklist'
+import { IBlacklistModel } from '../../models/blacklist'
 
 export interface IAddBlacklist {
   add: (blacklist: IBlacklistModel) => Promise<boolean>

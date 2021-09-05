@@ -1,7 +1,7 @@
-import { IAddBlacklist } from '../../../domain/usecases/add-blacklist'
+import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
 import { IBlacklistModel } from '../../../domain/models/blacklist'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { IGetNextBlacklistVersion } from '../../../domain/usecases/get-next-blacklist-version'
+import { IGetNextBlacklistVersion } from '../../../domain/usecases/blacklist/get-next-blacklist-version'
 
 export class BlacklistMongodbRepository implements IAddBlacklist, IGetNextBlacklistVersion {
   async add(blacklist: IBlacklistModel): Promise<boolean> {

@@ -5,7 +5,7 @@ import { IDocumentNumberValidation } from '../../protocols/validation'
 import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
 import { IBlacklistModel } from '../../../domain/models/blacklist'
 import { IntervalServerError } from '../../errors/interval-server-error'
-import { IAddBlacklist } from '../../../domain/usecases/add-blacklist'
+import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
 
 interface ITypes {
   sut: AddBlacklistController

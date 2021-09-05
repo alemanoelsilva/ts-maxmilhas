@@ -4,7 +4,7 @@ import { badRequest, created, internalServerError, unauthorizedRequest } from '.
 import { MissingParamError } from '../../errors/missing-params-error'
 import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
 import { IDocumentNumberValidation } from '../../protocols/validation'
-import { IAddBlacklist } from '../../../domain/usecases/add-blacklist'
+import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
 import { IntervalServerError } from '../../errors/interval-server-error'
 
 export class AddBlacklistController implements IController {
