@@ -4,13 +4,13 @@ import { badRequest, created, internalServerError, unauthorizedRequest } from '.
 import { MissingParamError } from '../../errors/missing-params-error'
 import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
 import { IDocumentNumberValidation } from '../../protocols/validation'
-import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
 import { IntervalServerError } from '../../errors/interval-server-error'
+import { IAddBlacklistBusiness } from '../../../application/protocols/add-blacklist'
 
 export class AddBlacklistController implements IController {
   constructor(
     private readonly documentNumberValidation: IDocumentNumberValidation,
-    private readonly addBlacklist: IAddBlacklist
+    private readonly addBlacklist: IAddBlacklistBusiness
   ) {}
 
   async handler(request: IHttpRequest): Promise<IHttpResponse> {

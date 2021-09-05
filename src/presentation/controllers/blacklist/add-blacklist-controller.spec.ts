@@ -3,14 +3,13 @@ import { IHttpRequest } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-params-error'
 import { IDocumentNumberValidation } from '../../protocols/validation'
 import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
-import { IBlacklistModel } from '../../../domain/models/blacklist'
 import { IntervalServerError } from '../../errors/interval-server-error'
-import { IAddBlacklist } from '../../../domain/usecases/blacklist/add-blacklist'
+import { IAddBlacklistBusiness } from '../../../application/protocols/add-blacklist'
 
 interface ITypes {
   sut: AddBlacklistController
   documentNumberValidationStub: IDocumentNumberValidation
-  addBlacklistStub: IAddBlacklist
+  addBlacklistStub: IAddBlacklistBusiness
 }
 
 const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
@@ -22,11 +21,9 @@ const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
   return new DocumentNumberValidationStub()
 }
 
-const makeAddBlacklist = (): IAddBlacklist => {
-  class AddBlackListStub implements IAddBlacklist {
-    async add(document: IBlacklistModel): Promise<any> {
-      return new Promise(resolve => resolve({}))
-    }
+const makeAddBlacklist = (): IAddBlacklistBusiness => {
+  class AddBlackListStub implements IAddBlacklistBusiness {
+    async add(document: string): Promise<void> {}
   }
   return new AddBlackListStub()
 }
@@ -93,7 +90,7 @@ describe('Controller - Add Blacklist', () => {
       expect(response.statusCode).toEqual(401)
     })
 
-    it('should return status code 500 when add-blacklist use cases throws', async() => {
+    it('should return status code 500 when addBlacklist business throws', async() => {
       const fakeError = new Error('Fake error')
       const { sut, addBlacklistStub } = makeSut()
       jest.spyOn(addBlacklistStub, 'add').mockRejectedValue(fakeError)

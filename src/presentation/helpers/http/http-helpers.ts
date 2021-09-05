@@ -1,11 +1,11 @@
 import { IHttpResponse } from '../../protocols/http'
 
-export const succeed = (body = {}): IHttpResponse => ({
+export const succeed = (body: any): IHttpResponse => ({
   statusCode: 200,
   body
 })
 
-export const created = (body = {}): IHttpResponse => ({
+export const created = (body: any): IHttpResponse => ({
   statusCode: 201,
   body
 })
