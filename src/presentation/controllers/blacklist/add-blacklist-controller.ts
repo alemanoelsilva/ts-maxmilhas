@@ -1,13 +1,13 @@
-import { IHttpRequest, IHttpResponse } from '../protocols/http'
-import { IController } from '../protocols/controller'
-import { badRequest, created, internalServerError, unauthorizedRequest } from '../helpers/http/http-helpers'
-import { MissingParamError } from '../errors/missing-params-error'
-import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
-import { IDocumentNumberValidation } from '../protocols/validation'
-import { IAddBlacklist } from '../../domain/usecases/add-blacklist'
-import { IntervalServerError } from '../errors/interval-server-error'
+import { IHttpRequest, IHttpResponse } from '../../protocols/http'
+import { IController } from '../../protocols/controller'
+import { badRequest, created, internalServerError, unauthorizedRequest } from '../../helpers/http/http-helpers'
+import { MissingParamError } from '../../errors/missing-params-error'
+import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
+import { IDocumentNumberValidation } from '../../protocols/validation'
+import { IAddBlacklist } from '../../../domain/usecases/add-blacklist'
+import { IntervalServerError } from '../../errors/interval-server-error'
 
-export class AddBlacklist implements IController {
+export class AddBlacklistController implements IController {
   constructor(
     private readonly documentNumberValidation: IDocumentNumberValidation,
     private readonly addBlacklist: IAddBlacklist

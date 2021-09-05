@@ -1,14 +1,14 @@
-import { AddBlacklist } from './add-blacklist'
-import { IHttpRequest } from '../protocols/http'
-import { MissingParamError } from '../errors/missing-params-error'
-import { IDocumentNumberValidation } from '../protocols/validation'
-import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
-import { IBlacklistModel } from '../../domain/models/blacklist'
-import { IntervalServerError } from '../errors/interval-server-error'
-import { IAddBlacklist } from '../../domain/usecases/add-blacklist'
+import { AddBlacklistController } from './add-blacklist-controller'
+import { IHttpRequest } from '../../protocols/http'
+import { MissingParamError } from '../../errors/missing-params-error'
+import { IDocumentNumberValidation } from '../../protocols/validation'
+import { InvalidDocumentNumberError } from '../../errors/invalid-document-number-error'
+import { IBlacklistModel } from '../../../domain/models/blacklist'
+import { IntervalServerError } from '../../errors/interval-server-error'
+import { IAddBlacklist } from '../../../domain/usecases/add-blacklist'
 
 interface ITypes {
-  sut: AddBlacklist
+  sut: AddBlacklistController
   documentNumberValidationStub: IDocumentNumberValidation
   addBlacklistStub: IAddBlacklist
 }
@@ -35,7 +35,7 @@ const makeSut = (): ITypes => {
   const documentNumberValidationStub = makeDocumentNumberValidationStub()
   const addBlacklistStub = makeAddBlacklist()
 
-  const sut = new AddBlacklist(documentNumberValidationStub, addBlacklistStub)
+  const sut = new AddBlacklistController(documentNumberValidationStub, addBlacklistStub)
 
   return {
     sut,
@@ -63,7 +63,7 @@ const makeFakeRequest = (): any => {
 
 describe('Controller - Add Blacklist', () => {
   describe('Successful blacklist creation', () => {
-    it('should return status code 201 when AddBlacklist succeeds', async() => {
+    it('should return status code 201 when AddBlacklistController succeeds', async() => {
       const { sut } = makeSut()
 
       const response = await sut.handler(makeFakeRequest().succeed)
