@@ -5,12 +5,12 @@ import { IDocumentNumberValidation } from '../protocols/validation'
 import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
 import { IBlacklistModel } from '../../domain/models/blacklist'
 import { IntervalServerError } from '../errors/interval-server-error'
-import { IDbAddBlacklist } from '../../domain/usecases/db-add-blacklist'
+import { IAddBlacklist } from '../../domain/usecases/add-blacklist'
 
 interface ITypes {
   sut: AddBlacklist
   documentNumberValidationStub: IDocumentNumberValidation
-  addBlacklistStub: IDbAddBlacklist
+  addBlacklistStub: IAddBlacklist
 }
 
 const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
@@ -22,8 +22,8 @@ const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
   return new DocumentNumberValidationStub()
 }
 
-const makeAddBlacklist = (): IDbAddBlacklist => {
-  class AddBlackListStub implements IDbAddBlacklist {
+const makeAddBlacklist = (): IAddBlacklist => {
+  class AddBlackListStub implements IAddBlacklist {
     async add(document: IBlacklistModel): Promise<any> {
       return new Promise(resolve => resolve({}))
     }
