@@ -3,14 +3,14 @@ import { IHttpRequest } from '../protocols/http'
 import { MissingParamError } from '../errors/missing-params-error'
 import { IDocumentNumberValidation } from '../protocols/validation'
 import { InvalidDocumentNumberError } from '../errors/invalid-document-number-error'
-import { IAddBlacklist } from '../../domain/usecases/add-blacklist'
 import { IBlacklistModel } from '../../domain/models/blacklist'
 import { IntervalServerError } from '../errors/interval-server-error'
+import { IDbAddBlacklist } from '../../domain/usecases/db-add-blacklist'
 
 interface ITypes {
   sut: AddBlacklist
   documentNumberValidationStub: IDocumentNumberValidation
-  addBlacklistStub: IAddBlacklist
+  addBlacklistStub: IDbAddBlacklist
 }
 
 const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
@@ -22,8 +22,8 @@ const makeDocumentNumberValidationStub = (): IDocumentNumberValidation => {
   return new DocumentNumberValidationStub()
 }
 
-const makeAddBlacklist = (): IAddBlacklist => {
-  class AddBlackListStub implements IAddBlacklist {
+const makeAddBlacklist = (): IDbAddBlacklist => {
+  class AddBlackListStub implements IDbAddBlacklist {
     async add(document: IBlacklistModel): Promise<any> {
       return new Promise(resolve => resolve({}))
     }
