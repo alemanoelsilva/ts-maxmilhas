@@ -19,12 +19,12 @@ export class AddBlacklist implements IController {
 
       if (!documentNumber) {
         const missingParamError = new MissingParamError('documentNumber')
-        return new Promise(resolve => resolve(badRequest(missingParamError)))
+        return badRequest(missingParamError)
       }
 
       if (!this.documentNumberValidation.validate(documentNumber)) {
         const invalidDocumentNumberError = new InvalidDocumentNumberError()
-        return new Promise(resolve => resolve(unauthorizedRequest(invalidDocumentNumberError)))
+        return unauthorizedRequest(invalidDocumentNumberError)
       }
 
       await this.addBlacklist.add(documentNumber)
