@@ -1,14 +1,11 @@
 import { IDbAddBlacklist } from '../../../domain/usecases/db-add-blacklist'
 import { IBlacklistModel } from '../../../domain/models/blacklist'
+import { MongoHelper } from '../helpers/mongo-helper'
 
 export class BlacklistMongodbRepository implements IDbAddBlacklist {
-  constructor(private readonly mongoHelper: any) {}
-
   async add(blacklist: IBlacklistModel): Promise<boolean> {
-    const blacklistCollection = await this.mongoHelper.getCollection('blacklist')
-
-    await blacklistCollection.insert(blacklist)
-
+    const blacklistCollection = await MongoHelper.getCollection('blacklist')
+    await blacklistCollection.insertOne(blacklist)
     return true
   }
 }
