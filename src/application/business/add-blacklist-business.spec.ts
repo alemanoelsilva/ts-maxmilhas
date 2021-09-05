@@ -57,5 +57,20 @@ describe('Application - Blacklist Business', () => {
         version: '1'
       })
     })
+
+    it('should throw when getNextVersion method throws', async () => {
+      const { sut, addBlacklistStub, getNextVersionStub } = makeSut()
+
+      const error = new Error('Fake getNextVersion error')
+
+      jest.spyOn(getNextVersionStub, 'getNextVersion').mockRejectedValue(error)
+      jest.spyOn(addBlacklistStub, 'add')
+
+      const documentNumber: string = '999.999.999-99'
+
+      const promise = sut.add(documentNumber)
+
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
