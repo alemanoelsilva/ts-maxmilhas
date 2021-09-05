@@ -51,7 +51,7 @@ describe('Infrastructure - Blacklist Mongo Repository', () => {
       await collection.insertOne(blacklistMock)
     })
 
-    it('should return 2 as the next version of blacklist', async () => {
+    it('should return 2 as the next version of blacklist when blacklist is already registered', async () => {
       const { sut } = makeSut()
 
       const fakeDocumentNumber = '999.999.999-99'
@@ -59,6 +59,16 @@ describe('Infrastructure - Blacklist Mongo Repository', () => {
       const response: string = await sut.getNextVersion(fakeDocumentNumber)
 
       expect(response).toEqual('2')
+    })
+
+    it('should return 1 as the next version of blacklist when blacklist is not already registered', async () => {
+      const { sut } = makeSut()
+
+      const fakeDocumentNumber = '999.999.999-91'
+
+      const response: string = await sut.getNextVersion(fakeDocumentNumber)
+
+      expect(response).toEqual('1')
     })
   })
 })
