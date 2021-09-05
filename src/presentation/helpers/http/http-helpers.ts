@@ -14,3 +14,8 @@ export const unauthorizedRequest = (error: Error): IHttpResponse => ({
   statusCode: 401,
   body: error
 })
+
+export const internalServerError = (error: Error): IHttpResponse => ({
+  statusCode: 500,
+  body: error
+})
