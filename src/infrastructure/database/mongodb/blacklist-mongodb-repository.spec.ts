@@ -1,44 +1,32 @@
 import { BlacklistMongodbRepository } from './blacklist-mongodb-repository'
 import { IBlacklistModel } from '../../../domain/models/blacklist'
+import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection } from 'mongodb'
-
-interface IMongoHelper {
-  getCollection: (name: string) => Promise<Collection>
-}
 
 interface ITypes {
   sut: BlacklistMongodbRepository
-  mongoHelperStub: IMongoHelper
-}
-
-const mongoInsertStub = async (): Promise<any> => {
-  console.log('mongoInsertStub')
-  return new Promise(resolve => resolve(true))
-}
-
-const makeMongoHelperStub = (): IMongoHelper => {
-  class MongoHelper implements IMongoHelper {
-    async getCollection(): Promise<any> {
-      return new Promise(resolve => resolve({
-        insert: mongoInsertStub
-      }))
-    }
-  }
-  return new MongoHelper()
 }
 
 const makeSut = (): ITypes => {
-  const mongoHelperStub = makeMongoHelperStub()
-
-  const sut = new BlacklistMongodbRepository(mongoHelperStub)
+  const sut = new BlacklistMongodbRepository()
 
   return {
-    sut,
-    mongoHelperStub
+    sut
   }
 }
 
+let collection: Collection
+
 describe('Infrastructure - Blacklist Mongo Repository', () => {
+  beforeAll(async () => MongoHelper.connect('mongodb://localhost:27017/ts-maxmilhas'))
+
+  afterAll(async () => MongoHelper.disconnect())
+
+  beforeEach(async () => {
+    collection = await MongoHelper.getCollection('blacklist')
+    await collection.deleteMany({})
+  })
+
   describe('Add Blacklist', () => {
     it('should return true when BlacklistMongodbRepository add method succeeds', async () => {
       const { sut } = makeSut()
