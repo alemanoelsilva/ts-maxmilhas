@@ -36,9 +36,29 @@ describe('Infrastructure - Blacklist Mongo Repository', () => {
         version: '1'
       }
 
-      const response = await sut.add(fakeBlacklist)
+      const response: boolean = await sut.add(fakeBlacklist)
 
       expect(response).toBeTruthy()
+    })
+  })
+
+  describe('Get Next Blacklist Version', () => {
+    beforeEach(async () => {
+      const blacklistMock: IBlacklistModel = {
+        documentNumber: '999.999.999-99',
+        version: '1'
+      }
+      await collection.insertOne(blacklistMock)
+    })
+
+    it('should return 2 as the next version of blacklist', async () => {
+      const { sut } = makeSut()
+
+      const fakeDocumentNumber = '999.999.999-99'
+
+      const response: string = await sut.getNextVersion(fakeDocumentNumber)
+
+      expect(response).toEqual('2')
     })
   })
 })
