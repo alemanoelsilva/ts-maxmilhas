@@ -1,16 +1,10 @@
-import express, { Request, Response } from 'express'
+import { MongoHelper } from './infrastructure/database/helpers/mongo-helper'
+import env from './main/config/envs'
 
-const app = express()
-const port: number = 3000
-
-app.listen(port, () => {
-  console.log(`The api is running on ${port}`)
-})
-
-app.get('/health', (request: Request, response: Response) => {
-  console.log('health')
-
-  response.json({
-    message: 'health'
-  }).end()
-})
+MongoHelper.connect(env.mongoUrl)
+  .then(async () => {
+    const app = (await import('./main/config/app')).default
+    return app.listen(env.port)
+  })
+  .then(() => console.log(`Api running on port ${env.port}`))
+  .catch(console.error)
